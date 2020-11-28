@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}"
+      lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Add Product</title>
+</head>
+
+<body>
+<div class="container">
+    <div layout:fragment="content" th:object="${allUsers}">
+        <table class="table table-bordered table-secondary">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Username</th>
+                <th scope="col">Password</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Roles</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${allUsers}" th:if="${user.username != #request.userPrincipal.name}">
+                <th th:text="${user.id}"></th>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.password}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:each="role : ${user.roles}" th:text="${role.name} + ';'"></td>
+                <td>
+                    <form th:action="@{/admin/delete?userId={userId}(userId=${user.id})}" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

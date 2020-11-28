@@ -1,0 +1,71 @@
+<div th:fragment="header" xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <nav class="navbar navbar-expand-md navbar-light" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="/"> <img src="" th:src="@{/images/shop.jpg}" width="30" height="30" alt=""/>
+            OnlineShop</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li sec:authorize="isAnonymous()" class="nav-item active">
+                    <a class="nav-link" href="/login">Войти</a>
+                </li>
+                <li sec:authorize="isAnonymous()" class="nav-item active">
+                    <a class="nav-link" href="/registration">Регистрация</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="false">Категории товаров</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/products">Все товары</a>
+                        <a class="dropdown-item" href="/phones">Телефоны</a>
+                        <a class="dropdown-item" href="/tablets">Планшеты</a>
+                        <a class="dropdown-item" href="/watches">Часы</a>
+                        <a class="dropdown-item" href="/ebooks">Электронные книги</a>
+                        <a class="dropdown-item" href="/headphones">Наушники</a>
+                    </div>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link active" href="/basket">Корзина</a>
+                </li>
+            </ul>
+
+        <form class="form-inline"
+              th:action="@{/products/search/}"
+              method="get" id="searchFormId">
+            <input class="form-control mr-sm-1" type="search" placeholder="Поиск товаров" id="searchInput"
+                   aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchButton">Поиск</button>
+        </form>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li sec:authorize="isAuthenticated() && hasRole('ADMIN')" class="nav-item">
+                    <a class="nav-link active" href="/product/add">Добавить товар</a>
+                </li>
+                <li sec:authorize="isAuthenticated() && hasRole('ADMIN')" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true" aria-expanded="false">Пользователи</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/admin/orders">Заказы</a>
+                        <a class="dropdown-item" href="/admin">Аккаунты</a>
+                    </div>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item ">
+                    <a class="nav-link active" href="/logout">Выйти</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <script type="text/javascript"
+            th:src="@{/webjars/jquery/3.5.1/jquery.min.js/}"></script>
+    <script type="text/javascript"
+            th:src="@{/webjars/bootstrap/4.5.3/js/bootstrap.min.js}"></script>
+    <script>
+        $("#searchButton").click(function () {
+            $("#searchFormId").attr("action", $("#searchFormId").attr("action") + $("#searchInput").val())
+        })
+    </script>
+</div>

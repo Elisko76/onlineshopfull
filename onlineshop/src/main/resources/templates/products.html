@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}"
+      lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Products</title>
+</head>
+<body>
+<div class="container" th:object="${products}">
+
+
+    <div layout:fragment="content">
+
+        <p th:if="${products.size() == 0}" class="h3 text-center">Товаров нет.</p>
+        <div class="card-deck">
+            <div class="row row-cols-md-2 row-cols-md-1" style="margin-top:20px" th:each="product : ${products}">
+                <div class="col-md-12">
+                    <div class="card text-center">
+
+                        <img src="" th:src="@{${product.photo}}" class="rounded mx-auto d-block" width="180" height="180"
+                             alt="...">
+                        <div class="card-body">
+<!--                            <img class="card-img-top" th:src="@{${product.photo}}" >-->
+                            <h5 class="card-title"><a
+                                    th:href="@{/product/{productId}/(productId=${product.id})}"
+                                    th:text="${product.name}"> </a></h5>
+                            <p class="card-text" th:text="'Price: ' + ${product.price}"></p>
+
+                            <form sec:authorize="isAuthenticated()"
+                                  th:action="@{/{username}/add/product/{productId}/{action}(username=${#request.getUserPrincipal().getName()},
+                                  productId=${product.id},
+                                  action='no')}"
+                                  method="POST">
+                                <button sec:authorize="isAuthenticated()" type="submit" class="btn btn-primary">В корзину
+                                </button>
+                            </form>
+                            <form sec:authorize="isAuthenticated() && hasRole('ADMIN')"
+                                  th:action="@{/product/delete/{productId}/(productId=${product.id})}"
+                                  method="POST">
+                                <button type="submit" class="btn btn-danger">Удалить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <nav aria-label="Pagination" th:if="${page.totalPages gt 1}">
+            <ul class="pagination justify-content-center font-weight-bold">
+                <li class="page-item" th:classappend="${page.number eq 0} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/products(page=${page.number lt 2 ? 1 : page.number})}"
+                       aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" th:classappend="${i eq page.number + 1} ? 'active'"
+                    th:each="i : ${#numbers.sequence( 1, page.totalPages, 1)}">
+                    <a class="page-link" th:href="@{/products(page=${i})}" th:text="${i}"
+                       th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+                </li>
+                <li class="page-item" th:classappend="${page.number + 1 eq page.totalPages} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{/products(page=${page.number + 2})}"
+                       aria-label="Next" title="Next Page" data-toggle="tooltip">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</div>
+</body>
+</html>

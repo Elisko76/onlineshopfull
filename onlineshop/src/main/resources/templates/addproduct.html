@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}"
+      lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Add Product</title>
+</head>
+
+<body>
+<div class="container">
+    <div layout:fragment="content">
+        <form method="POST" th:action="@{/product/add}" th:object="${productForm}">
+            <p class="error-message" th:if="${#fields.hasGlobalErrors()}"
+               th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation
+                error</p>
+            <p class="h2 text-center">Добавление нового товара</p>
+            <div class="form-group col-md-3 offset-md-4"
+                 th:classappend="${#fields.hasErrors('name')}? 'has-error':''">
+                <label for="exampleInputName">Наименование продукта</label>
+                <input name="name" type="text" class="form-control" id="exampleInputName"
+                       placeholder="Наименование"
+                       th:field="*{name}"/>
+                <p class="alert alert-danger"
+                   th:if="${#fields.hasErrors('name')}"
+                   th:errors="*{name}">Validation error</p>
+            </div>
+            <div class="form-group col-md-3 offset-md-4"
+                 th:classappend="${#fields.hasErrors('description')}? 'has-error':''">
+                <label for="exampleInputDescription">Описание продукта</label>
+                <input name="description" type="text" class="form-control"
+                       id="exampleInputDescription"
+                       placeholder="Описание"
+                       th:field="*{description}"/>
+                <p class="alert alert-danger"
+                   th:if="${#fields.hasErrors('description')}"
+                   th:errors="*{description}">Validation error</p>
+            </div>
+            <div class="form-group col-md-3 offset-md-4"
+                 th:classappend="${#fields.hasErrors('cathegory')}? 'has-error':''">
+                <label for="exampleInputPrice">Категория продукта</label>
+                <select name="price" type="text" class="form-control" id="exampleInputPrice"
+                        th:field="*{cathegory}">
+                    <option th:each="cat : ${T(com.onlineshop.model.ProductCategory).values()}"
+                            th:value="${cat}" th:text="${cat.getDisplayValue()}"></option>
+                </select>
+                <p class="alert alert-danger"
+                   th:if="${#fields.hasErrors('cathegory')}"
+                   th:errors="*{cathegory}">Validation error</p>
+            </div>
+            <div class="form-group col-md-3 offset-md-4"
+                 th:classappend="${#fields.hasErrors('price')}? 'has-error':''">
+                <label for="exampleInputCategory">Цена продукта</label>
+                <input name="secondName" type="text" class="form-control" id="exampleInputCategory"
+                       placeholder="Цена"
+                       th:field="*{price}"/>
+                <p class="alert alert-danger"
+                   th:if="${#fields.hasErrors('price')}"
+                   th:errors="*{price}">Validation error</p>
+            </div>
+            <div class="form-group col-md-3 offset-md-4"
+                 th:classappend="${#fields.hasErrors('photo')}? 'has-error':''">
+                <label for="exampleInputPhoto">Фото path</label>
+                <input name="phone" type="text" class="form-control" id="exampleInputPhoto"
+                       placeholder="Фото Path"
+                       th:field="*{photo}"/>
+                <p class="alert alert-danger"
+                   th:if="${#fields.hasErrors('photo')}"
+                   th:errors="*{photo}">Validation error</p>
+            </div>
+            <button type="submit" class="btn btn-primary offset-md-5">Добавить</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

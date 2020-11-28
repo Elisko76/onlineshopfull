@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}"
+      lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Login</title>
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content">
+        <form method="POST" th:action="@{/login}">
+            <div th:if="${param.error}">
+                <div class="alert alert-danger">Неверный пароль!
+                </div>
+            </div>
+            <p class="h2 offset-md-5">Логин</p>
+            <div class="form-group col-md-3 offset-md-4">
+                <label for="exampleInputUsername">Имя пользователя</label>
+                <input name="username" type="text" class="form-control" id="exampleInputUsername" placeholder="Имя пользователя"
+                       aria-describedby="usernameHelp"/>
+                <small id="usernameHelp" class="form-text text-muted">Введите имя пользователя</small>
+            </div>
+            <div class="form-group col-md-3 offset-md-4">
+                <label for="exampleInputPassword">Пароль</label>
+                <input name="password" type="password" class="form-control" id="exampleInputPassword"
+                       placeholder="Пароль">
+            </div>
+            <button type="submit" class="btn btn-primary offset-md-5">Войти</button>
+            <br/>
+            <div class="form-group col-md-3 offset-md-4">
+                <br/>
+                <span class="text-center">Новый пользователь? <a href="/" th:href="@{/registration}">Зарегистрируйтесь здесь</a></span>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

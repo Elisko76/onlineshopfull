@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Index</title>
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content">
+        <br/>
+        <p sec:authorize="isAuthenticated()" class="h3 text-center">Добро пожаловать,
+        <p sec:authorize="isAuthenticated()" sec:authentication="principal.username" class="h3 text-center">! </p>
+        <br/>
+        <p class="h3 text-center">Это онлайн магазин телефонов, планшетов, электронных книг, часов и наушников</p>
+        <br/>
+        <p sec:authorize="!isAuthenticated()" class="h3 text-center">Пожалуйста, авторизуйтесь в системе и совершайте покупки</p>
+        <br/>
+        <p sec:authorize="isAuthenticated()" class="h3 text-center">Пожалуйста, перейдите на вкладку товары.</p>
+    </div>
+</div>
+</body>
+</html>

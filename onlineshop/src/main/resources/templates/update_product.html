@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Product Info</title>
+</head>
+<body>
+<div sec:authorize="isAuthenticated() && hasRole('ADMIN')" class="container">
+    <div layout:fragment="content" th:object="${product}">
+        <p class="h2">Изменение товара</p>
+        <form method="post" th:action="@{/product/{productId}/edit/(productId=${product.id})}">
+            <div class="form-group row">
+                <label for="formNameInput" class="col-sm-2 col-form-label">Наименование:</label>
+                <div class="col-sm-5">
+                    <input class="form-control" type="text" th:value="${product.name}"
+                           id="formNameInput"
+                           th:field="*{name}"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="formDescriptionInput" class="col-sm-2 col-form-label">Описание:</label>
+                <div class="col-sm-5">
+                    <input class="form-control" type="text" th:value="${product.description}"
+                           id="formDescriptionInput"
+                           th:field="*{description}"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="formPriceInput" class="col-sm-2 col-form-label">Цена:</label>
+                <div class="col-sm-5">
+                    <input class="form-control" type="text" th:value="${product.price}"
+                           id="formPriceInput"
+                           th:field="*{price}"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="formCategoryInput" class="col-sm-2 col-form-label">Категория:</label>
+                <div class="col-sm-5">
+                    <select name="price" type="text" class="form-control" id="formCategoryInput"
+                            th:field="*{cathegory}">
+                        <option th:each="cat : ${T(com.onlineshop.model.ProductCategory).values()}"
+                                th:value="${cat}" th:text="${cat.getDisplayValue()}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="formPhotoInput" class="col-sm-2 col-form-label">Фото Path:</label>
+                <div class="col-sm-5">
+                    <input class="form-control" type="text" th:value="${product.photo}"
+                           id="formPhotoInput"
+                           th:field="*{photo}"/>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary md-5">Изменить товар</button>
+            <a th:href="@{/product/{productId}/(productId=${product.id})}" class="btn btn-secondary md-5 active"
+               role="button"
+               aria-pressed="true">Cancel</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

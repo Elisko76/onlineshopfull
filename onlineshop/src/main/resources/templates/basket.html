@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}"
+      lang="en"
+>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>My Basket</title>
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content" th:object="${products}">
+        <p th:if="${products.size() == 0}" class="h3 text-center">Sorry, you don't have products in your basket yet.</p>
+        <table th:if="${products.size() != 0}" class="table" >
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Наименование</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Тип</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <th th:text="${product.name}"></th>
+                <td th:text="${product.price}"></td>
+                <td th:text="${product.cathegory}"></td>
+                <td>
+                    <form th:action="@{/basket/delete/{productId}/(productId=${product.id})}"
+                          method="POST">
+                        <button type="submit">Удалить из корзины</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p th:object="${sum}" th:text="'Сумма заказа: '+ ${sum}"></p>
+        <form th:if="${products.size() != 0}" th:action="@{/basket/movetoorder/}"
+              method="POST">
+            <button type="submit">Оформить заказ</button>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+</html>

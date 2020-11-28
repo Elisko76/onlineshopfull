@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}"
+      lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Registration</title>
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content">
+        <form method="POST" th:action="@{/registration}" th:object="${userForm}">
+            <p class="error-message" th:if="${#fields.hasGlobalErrors()}"
+               th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation
+                error</p>
+            <p class="h2 offset-md-5">Регистрация</p>
+            <div class="form-group col-md-3 offset-md-4"
+                 th:classappend="${#fields.hasErrors('username')}? 'has-error':''">
+                <label for="exampleInputUsername">Имя пользователя</label>
+                <input name="username" type="text" class="form-control" id="exampleInputUsername"
+                       placeholder="Имя пользователя"
+                       th:field="*{username}"/>
+                <p class="alert alert-danger"
+                   th:if="${#fields.hasErrors('username')}"
+                   th:errors="*{username}">Validation error</p>
+            </div>
+            <div class="form-group col-md-3 offset-md-4">
+                <label for="exampleInputPassword">Пароль</label>
+                <input name="password" type="password" class="form-control"
+                       id="exampleInputPassword"
+                       placeholder="Пароль"
+                       th:field="*{password}"/>
+                <p class="alert alert-danger"
+                   th:if="${#fields.hasErrors('password')}"
+                   th:errors="*{password}">Validation error</p>
+            </div>
+            <div class="form-group col-md-3 offset-md-4"
+                 th:classappend="${#fields.hasErrors('firstName')}? 'has-error':''">
+                <label for="exampleInputFirstName">Имя</label>
+                <input name="firstName" type="text" class="form-control"
+                       id="exampleInputFirstName"
+                       placeholder="Имя"
+                       th:field="*{firstName}"/>
+                <p class="error-message"
+                   th:each="error: ${#fields.errors('firstName')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div class="form-group col-md-3 offset-md-4"
+                 th:classappend="${#fields.hasErrors('secondName')}? 'has-error':''">
+                <label for="exampleInputSecondName">Фамилия</label>
+                <input name="secondName" type="text" class="form-control"
+                       id="exampleInputSecondName"
+                       placeholder="Фамилия"
+                       th:field="*{secondName}"/>
+                <p class="error-message"
+                   th:each="error: ${#fields.errors('secondName')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div class="form-group col-md-3 offset-md-4"
+                 th:classappend="${#fields.hasErrors('lastName')}? 'has-error':''">
+                <label for="exampleInputLastName">Отчество</label>
+                <input name="lastName" type="text" class="form-control" id="exampleInputLastName"
+                       placeholder="Отчество"
+                       th:field="*{lastName}"/>
+                <p class="error-message"
+                   th:each="error: ${#fields.errors('lastName')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div class="form-group col-md-3 offset-md-4"
+                 th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
+                <label for="exampleInputEmail">Email</label>
+                <input name="email" type="text" class="form-control" id="exampleInputEmail"
+                       placeholder="Email"
+                       th:field="*{email}"/>
+                <p class="error-message"
+                   th:each="error: ${#fields.errors('email')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div class="form-group col-md-3 offset-md-4"
+                 th:classappend="${#fields.hasErrors('address')}? 'has-error':''">
+                <label for="exampleInputAddress">Адрес</label>
+                <input name="address" type="text" class="form-control" id="exampleInputAddress"
+                       placeholder="Адрес"
+                       th:field="*{address}"/>
+                <p class="error-message"
+                   th:each="error: ${#fields.errors('address')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div class="form-group col-md-3 offset-md-4"
+                 th:classappend="${#fields.hasErrors('phoneNumber')}? 'has-error':''">
+                <label for="exampleInputPhone">Номер телефона</label>
+                <input name="phone" type="text" class="form-control" id="exampleInputPhone"
+                       placeholder="Номер телефона"
+                       th:field="*{phoneNumber}"/>
+                <p class="error-message"
+                   th:each="error: ${#fields.errors('phoneNumber')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <button type="submit" class="btn btn-primary offset-md-5">Зарегистрироваться</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

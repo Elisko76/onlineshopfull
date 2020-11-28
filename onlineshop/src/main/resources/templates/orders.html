@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}"
+      lang="en"
+>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Orders</title>
+</head>
+<body>
+<div class="container">
+    <div layout:fragment="content"
+         th:if="${allUsers.size() != 0}"
+         th:object="${allUsers}"
+         th:each="user: ${allUsers}">
+        <p th:if="${allUsers.size() == 0}" class="h3 text-center">Заказов нет.</p>
+        <h3 th:if="${user.getOrders().size() !=0 }" th:text="${user.username} + '; ' + ${user.firstName} + ' ' + ${user.lastName} + '; ' +
+${user.email} + '; ' + ${user.phoneNumber} + '; ' + ${user.address}"></h3>
+        <table th:if="${user.getOrders().size() !=0 }" class="table table-bordered table-secondary">
+            <thead>
+            <tr>
+                <th scope="col">Наименование продукта</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Категория</th>
+                <th scope="col">Описание</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${user.getOrders()}">
+                <th th:text="${order.name}"></th>
+                <td th:text="${order.price}"></td>
+                <td th:text="${order.cathegory}"></td>
+                <td th:text="${order.description}"></td>
+                <td>
+                    <form
+                            th:action="@{/admin/orders/delete/{orderId}/(orderId=${order.id})}"
+                            method="POST">
+                        <button type="submit">Удалить заказ</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br><br>
+</div>
+</body>
+</html>
